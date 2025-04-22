@@ -17,19 +17,26 @@ class SurfaceFittingApp:
     def __init__(self, root):
         self.root = root
         self.root.title("3D Surface Fitting GUI (Grid-based)")
-        self.root.geometry("1200x800")
+        # 设置为竖屏尺寸
+        self.root.geometry("900x600")
         
-        # 布局框架
-        self.frame_top = ttk.Frame(self.root)
-        self.frame_top.pack(pady=10, fill="x")
+        # 主框架布局 (垂直排列)
+        self.main_frame = ttk.Frame(self.root)
+        self.main_frame.pack(fill="both", expand=True, padx=20, pady=20)
         
-        self.frame_plot = ttk.Frame(self.root)
-        self.frame_plot.pack(pady=10, fill="both", expand=True)
+        # 顶部控制面板
+        self.frame_top = ttk.Frame(self.main_frame)
+        self.frame_top.pack(fill="x", pady=10)
         
-        self.frame_text = ttk.Frame(self.root)
-        self.frame_text.pack(pady=10, side="right", fill="y")
+        # 中间绘图区域
+        self.frame_plot = ttk.Frame(self.main_frame)
+        self.frame_plot.pack(fill="both", expand=True, pady=10)
         
-        # 顶部控件
+        # 底部文本框 (居中显示)
+        self.frame_text = ttk.Frame(self.main_frame)
+        self.frame_text.pack(fill="both", pady=10)
+        
+        # 顶部控件 (保持不变)
         self.btn_load = ttk.Button(self.frame_top, text="选择Excel文件", command=self.load_file)
         self.btn_load.pack(side="left", padx=5)
         
@@ -39,13 +46,13 @@ class SurfaceFittingApp:
         self.label_status = ttk.Label(self.frame_top, text="请加载Excel文件")
         self.label_status.pack(side="left", padx=5)
         
-        # 文本框（右侧）
-        self.text_output = scrolledtext.ScrolledText(self.frame_text, width=50, height=40, wrap=tk.WORD)
-        self.text_output.pack(padx=10)
+        # 文本框 (调整尺寸并居中)
+        self.text_output = scrolledtext.ScrolledText(self.frame_text, width=80, height=20, wrap=tk.WORD)
+        self.text_output.pack(fill="both", expand=True)
         self.text_output.insert(tk.END, "拟合结果将显示在这里...\n")
         self.text_output.config(state="normal")
         
-        # 存储数据
+        # 存储数据 (保持不变)
         self.X = None
         self.Y = None
         self.Z = None
